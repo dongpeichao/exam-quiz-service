@@ -6,6 +6,8 @@ import com.thoughtworks.exam.quiz.domain.model.blankquiz.BlankQuizRepository;
 import com.thoughtworks.exam.quiz.domain.model.blankquiz.IllegalScoreException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BlankQuizApplicationService {
     private final BlankQuizRepository blankQuizRepository;
@@ -19,5 +21,16 @@ public class BlankQuizApplicationService {
                 command.getScore(), command.getReferenceAnswer());
         blankQuizRepository.save(blankQuiz);
         return blankQuiz.getId();
+    }
+
+    public void updateQuiz(BlankQuizId blankQuizId, CreateQuizCommand command) {
+        Optional<BlankQuiz> blankQuizOptional = blankQuizRepository.findById(blankQuizId);
+
+        blankQuizOptional.ifPresent(blankQuiz -> {
+            blankQuiz.update(blankQuizId, command.getTeacherId(), command.getQuestion(),
+                    command.getScore(), command.getReferenceAnswer());
+            blankQuizRepository.save(blankQuiz);
+        });
+
     }
 }

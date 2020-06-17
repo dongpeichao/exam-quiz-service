@@ -20,8 +20,6 @@ public class BlankQuizEntity {
     private String referenceAnswer;
     private String teacherId;
     private int score;
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
 
     public BlankQuiz toModel() {
         return BlankQuiz.builder().id(new BlankQuizId(id))
