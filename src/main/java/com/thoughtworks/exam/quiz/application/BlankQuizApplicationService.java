@@ -1,5 +1,6 @@
 package com.thoughtworks.exam.quiz.application;
 
+import com.thoughtworks.exam.quiz.adapter.api.QueryQuizDTO;
 import com.thoughtworks.exam.quiz.domain.model.blankquiz.BlankQuiz;
 import com.thoughtworks.exam.quiz.domain.model.blankquiz.BlankQuizId;
 import com.thoughtworks.exam.quiz.domain.model.blankquiz.BlankQuizRepository;
@@ -32,5 +33,12 @@ public class BlankQuizApplicationService {
             blankQuizRepository.save(blankQuiz);
         });
 
+    }
+
+    public QueryQuizDTO query(String blankQuizId) {
+        Optional<BlankQuiz> blankQuizOptional = blankQuizRepository.findById(new BlankQuizId(blankQuizId));
+        return blankQuizOptional.map(blankQuiz -> new QueryQuizDTO(blankQuiz.getId().getValue(),
+                blankQuiz.getTeacherId(), blankQuiz.getContent(), blankQuiz.getScore(),
+                blankQuiz.getReferenceAnswer())).orElse(null);
     }
 }

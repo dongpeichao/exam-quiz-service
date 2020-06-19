@@ -27,4 +27,10 @@ public class BlankQuizController {
     public void update(@PathVariable("blankQuizId") String blankQuizId, @RequestBody CreateQuizCommand command) throws IllegalScoreException {
         blankQuizApplicationService.updateQuiz(new BlankQuizId(blankQuizId), command);
     }
+
+    @GetMapping("/{blankQuizId}")
+    @ResponseStatus(HttpStatus.OK)
+    public QueryQuizDTO query(@PathVariable("blankQuizId") String blankQuizId) {
+        return blankQuizApplicationService.query(blankQuizId);
+    }
 }
